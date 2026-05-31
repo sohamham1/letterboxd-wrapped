@@ -61,3 +61,18 @@ temp_sample_*
 *.zip
 *.csv
 !frontend/public/samples/*.zip
+
+# Internal planning and deployment docs
+DB_DEPLOYMENT_PLAN.md
+Deployment.md
+Plan.md
+RUNBOOK.md
+RUNTIME_IMPROVEMENTS.md
+
+# Dev assets and artifacts
+film-frames_1f39e-fe0f.png
+db_info_output.txt
+
+# DB analysis/utility scripts (internal dev tools)
+analyze_db.py
+dump_db_info.py
