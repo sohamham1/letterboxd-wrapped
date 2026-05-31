@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+curl_cffi
+beautifulsoup4
+httpx
+lxml
+letterboxdpy
+# we can keep sqlite3 as it is built in to python

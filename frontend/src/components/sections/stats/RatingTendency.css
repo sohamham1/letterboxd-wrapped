@@ -1,0 +1,44 @@
+.rating-tendency {
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--color-bg-elevated);
+    padding: var(--space-8);
+    border-radius: var(--radius-xl);
+    border: var(--border-subtle);
+}
+
+.rating-header {
+    text-align: center;
+    margin-bottom: var(--space-8);
+}
+
+.rating-subtitle {
+    font-size: var(--text-lg);
+    color: var(--color-text-secondary);
+    margin-top: var(--space-4);
+    line-height: 1.5;
+}
+
+.text-green {
+    color: #10b981;
+}
+
+.text-red {
+    color: #ef4444;
+}
+
+.rating-chart {
+    width: 100%;
+    padding: 0 var(--space-4);
+}
+
+.rating-footer {
+    margin-top: var(--space-4);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: var(--space-4);
+    width: 100%;
+    text-align: center;
+}

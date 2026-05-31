@@ -1,0 +1,291 @@
+.narrative-container {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: var(--space-20) 0;
+}
+
+.narrative-header {
+    text-align: center;
+    margin-bottom: var(--space-20);
+}
+
+.narrative-main-title {
+    font-size: clamp(3.5rem, 8vw, 6rem);
+    line-height: 1;
+    margin-top: var(--space-1);
+    color: var(--color-text-primary);
+}
+
+.narrative-track {
+    position: relative;
+}
+
+.narrative-line {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom,
+            rgba(96, 165, 250, 0.42) 0%,
+            rgba(251, 191, 36, 0.38) 45%,
+            rgba(96, 165, 250, 0.32) 100%);
+    transform: translateX(-50%);
+    opacity: 0.34;
+    pointer-events: none;
+}
+
+.narrative-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: var(--space-24);
+    width: 100%;
+    gap: var(--space-12);
+}
+
+.narrative-side {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.narrative-side--poster {
+    align-items: flex-end;
+}
+
+.narrative-side--content {
+    align-items: flex-start;
+}
+
+.narrative-item.reverse {
+    flex-direction: row-reverse;
+}
+
+.narrative-item.reverse .narrative-side--poster {
+    align-items: flex-start;
+}
+
+.narrative-item.reverse .narrative-side--content {
+    align-items: flex-end;
+    text-align: right;
+}
+
+.narrative-marker-container {
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    z-index: 2;
+}
+
+.narrative-marker {
+    width: 16px;
+    height: 16px;
+    background: var(--color-bg-primary);
+    border: 3px solid var(--color-accent-gold);
+    border-radius: 50%;
+    box-shadow: 0 0 12px var(--color-accent-gold);
+    animation: narrativePulse 2.2s ease-in-out infinite;
+}
+
+.narrative-marker.start {
+    border-color: #4ade80;
+    box-shadow: 0 0 15px #4ade80;
+}
+
+.narrative-marker.end {
+    border-color: #f87171;
+    box-shadow: 0 0 15px #f87171;
+}
+
+@keyframes narrativePulse {
+    0%,
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 10px rgba(251, 191, 36, 0.35);
+    }
+
+    50% {
+        transform: scale(1.08);
+        box-shadow: 0 0 16px rgba(251, 191, 36, 0.62);
+    }
+}
+
+.narrative-poster {
+    width: 380px;
+    aspect-ratio: 16/9;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: #1a1a1e;
+    /* Placeholder background */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.narrative-poster img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    background: #0f1118;
+    display: block;
+    /* Ensure it's not inline */
+}
+
+.narrative-poster--placeholder {
+    border: 1px dashed rgba(96, 165, 250, 0.55);
+    background: linear-gradient(160deg, rgba(59, 130, 246, 0.16), rgba(15, 23, 42, 0.72));
+}
+
+.narrative-poster-fallback {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 16px;
+    text-align: center;
+}
+
+.narrative-poster-fallback-title {
+    color: #dbeafe;
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+.narrative-poster-fallback-copy {
+    color: #bfdbfe;
+    font-size: 0.85rem;
+    line-height: 1.35;
+}
+
+
+.narrative-poster-title {
+    margin-top: var(--space-2);
+    max-width: 380px;
+    text-align: center;
+    color: var(--color-text-secondary);
+    font-size: var(--text-sm);
+    font-weight: var(--font-bold);
+    line-height: 1.3;
+}
+
+.narrative-content {
+    max-width: 360px;
+}
+
+.narrative-date {
+    font-size: var(--text-base);
+    font-weight: var(--font-bold);
+    color: var(--color-accent-gold);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: var(--space-3);
+    display: block;
+}
+
+.narrative-label {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    display: block;
+    margin-bottom: var(--space-2);
+}
+
+.narrative-description {
+    font-size: var(--text-2xl);
+    font-family: var(--font-display);
+    line-height: 1.25;
+    font-weight: var(--font-bold);
+    color: var(--color-text-primary);
+    background: linear-gradient(to right, #fff, #a1a1aa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* ==================== ANIMATIONS ==================== */
+.animate-slide-in {
+    animation: slideIn 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    animation-delay: var(--delay);
+    opacity: 0;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 768px) {
+    .narrative-line {
+        display: none;
+    }
+
+    .narrative-container {
+        padding: var(--space-12) 0;
+    }
+
+    .narrative-item,
+    .narrative-item.reverse {
+        flex-direction: column !important;
+        align-items: center !important;
+        padding-left: 0;
+        text-align: center !important;
+        gap: var(--space-6);
+        margin-bottom: var(--space-16);
+    }
+
+    .narrative-side {
+        flex: none;
+        align-items: center !important;
+    }
+
+    .narrative-label,
+    .narrative-description {
+        text-align: center;
+    }
+
+    .narrative-marker-container {
+        width: auto;
+        margin: 0;
+        order: 1;
+    }
+
+    .narrative-marker {
+        width: 12px;
+        height: 12px;
+        border-width: 2px;
+    }
+
+    .narrative-poster {
+        width: min(92vw, 340px);
+    }
+
+    .narrative-content {
+        max-width: 320px;
+    }
+
+    .narrative-date {
+        text-align: center;
+        width: 100%;
+    }
+
+    .narrative-poster-title {
+        max-width: min(92vw, 340px);
+    }
+
+    .narrative-main-title {
+        font-size: var(--text-4xl);
+    }
+}

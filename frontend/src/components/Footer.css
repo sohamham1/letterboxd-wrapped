@@ -1,0 +1,30 @@
+.footer {
+    width: 100%;
+    padding: var(--space-4) var(--space-4);
+    text-align: center;
+    background: transparent;
+    z-index: 50;
+    margin-top: auto;
+    /* Push to bottom in flex containers */
+    display: block;
+}
+
+.footer__text {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.4);
+    letter-spacing: 0.05em;
+    font-weight: 400;
+    max-width: 90%;
+    margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+    .footer {
+        padding: var(--space-4) var(--space-4);
+        display: block;
+    }
+
+    .footer__text {
+        font-size: 10px;
+    }
+}

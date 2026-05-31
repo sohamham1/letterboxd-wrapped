@@ -1,0 +1,175 @@
+.quirky-stats-grid {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-6);
+    width: 100%;
+    max-width: 1000px;
+    flex-wrap: wrap;
+    padding: var(--space-4) 0;
+}
+
+.quirky-card {
+    flex: 1;
+    min-width: 280px;
+    background: var(--color-bg-card);
+    border-radius: var(--radius-xl);
+    padding: var(--space-6);
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: transform var(--duration-normal) var(--ease-spring);
+    overflow: hidden;
+}
+
+.quirky-card:hover {
+    transform: translateY(-10px) rotate(1deg);
+    z-index: 5;
+}
+
+.quirky-icon {
+    font-size: var(--text-4xl);
+    margin-bottom: var(--space-4);
+    background: rgba(255, 255, 255, 0.05);
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.quirky-title {
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    margin-bottom: var(--space-3);
+    background: linear-gradient(to right, #fff, #aaa);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.quirky-desc {
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-6);
+    line-height: 1.5;
+    flex-grow: 1;
+}
+
+.quirky-desc strong {
+    color: var(--color-text-primary);
+    display: block;
+    margin-top: var(--space-1);
+    font-size: var(--text-lg);
+}
+
+.quirky-stat-row {
+    display: flex;
+    gap: var(--space-4);
+    margin-bottom: var(--space-6);
+}
+
+.stat-pill {
+    display: flex;
+    flex-direction: column;
+    background: rgba(0, 0, 0, 0.3);
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-md);
+    min-width: 80px;
+}
+
+.stat-pill span {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-text-muted);
+}
+
+.stat-pill strong {
+    font-size: var(--text-xl);
+    font-weight: var(--font-bold);
+}
+
+.stat-pill.user-rating strong {
+    color: var(--color-accent-gold);
+}
+
+.stat-pill.avg-rating strong {
+    color: var(--color-text-secondary);
+}
+
+.stat-pill.danger strong {
+    color: #ef4444;
+}
+
+.quirky-tag {
+    font-size: var(--text-xs);
+    font-weight: var(--font-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: rgba(255, 255, 255, 0.3);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    width: 100%;
+    padding-top: var(--space-4);
+}
+
+/* Card Variants */
+.card-binge {
+    border-bottom: 4px solid #f59e0b;
+}
+
+.card-loyalist {
+    border-bottom: 4px solid #f43f5e;
+}
+
+.card-hopper {
+    border-bottom: 4px solid #8b5cf6;
+}
+
+.card-speed {
+    border-bottom: 4px solid #06b6d4;
+}
+
+.card-epic {
+    border-bottom: 4px solid #ec4899;
+}
+
+.card-critic {
+    border-bottom: 4px solid #fbbf24;
+}
+
+.card-diverse {
+    border-bottom: 4px solid #10b981;
+}
+
+.card-hipster {
+    border-bottom: 4px solid #10b981;
+}
+
+.card-guilty {
+    border-bottom: 4px solid #ef4444;
+}
+
+.card-contrarian {
+    border-bottom: 4px solid #3b82f6;
+}
+
+.card-default {
+    border-bottom: 4px solid #ffffff;
+}
+
+.card-auteur {
+    border-bottom: 4px solid #f59e0b;
+}
+
+.card-global {
+    border-bottom: 4px solid #10b981;
+}
+
+.quirky-card {
+    background: linear-gradient(145deg, #1e1e24, #15151a);
+}

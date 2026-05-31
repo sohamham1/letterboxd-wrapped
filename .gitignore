@@ -1,0 +1,63 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+build/
+.vercel/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+frontend/.env
+frontend/.env.*
+api/.env
+api/.env.*
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Editor directories
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Cache
+.cache/
+.parcel-cache/
+cache/
+__pycache__/
+
+# Large IMDb datasets
+*.tsv.gz
+*.gz
+*.tsv
+*.sqlite
+letterboxd_imdb_backup.db
+archive/
+
+# Ignore local DB (now sourced from private GitHub Releases)
+letterboxd_imdb.db
+
+# Data exports (large files)
+*.csv
+*.zip
+
+# Local design variants
+design_variants/
+
+# Template and temporary sample directories
+letterboxd-i-like-da-pizza-*
+letterboxd-i_like_da_pizza-*
+temp_sample_*
+*.zip
+*.csv
+!frontend/public/samples/*.zip

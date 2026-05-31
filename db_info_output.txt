@@ -1,0 +1,35 @@
+=== Table: movie_metadata ===
+Schema:
+CREATE TABLE movie_metadata (
+        tconst TEXT PRIMARY KEY,
+        primaryTitle TEXT,
+        startYear REAL,
+        runtimeMinutes REAL,
+        genres TEXT,
+        directors TEXT,
+        actors TEXT
+    )
+
+Sample Data (5 rows):
+Columns: ['tconst', 'primaryTitle', 'startYear', 'runtimeMinutes', 'genres', 'directors', 'actors']
+('tt0000009', 'Miss Jerry', 1894.0, 45.0, 'Romance', 'nm0085156', 'nm0063086,nm0183823,nm1309758')
+('tt0000147', 'The Corbett-Fitzsimmons Fight', 1897.0, 100.0, 'Documentary,News,Sport', 'nm0714557', None)
+('tt0000502', 'Bohemios', 1905.0, 100.0, '\\N', 'nm0063413', 'nm0215752,nm0252720')
+('tt0000574', 'The Story of the Kelly Gang', 1906.0, 70.0, 'Action,Adventure,Biography', 'nm0846879', 'nm0846887,nm0846894,nm1431224,nm3002376,nm0143899,nm0170118,nm3001683,nm0187697,nm3002754,nm3003322')
+('tt0000591', 'The Prodigal Son', 1907.0, 90.0, 'Drama', 'nm0141150', 'nm0906197,nm0332182,nm1323543,nm1759558')
+----------------------------------------
+=== Table: names ===
+Schema:
+CREATE TABLE names (
+        nconst TEXT PRIMARY KEY,
+        primaryName TEXT
+    )
+
+Sample Data (5 rows):
+Columns: ['nconst', 'primaryName']
+('nm0000005', 'Ingmar Bergman')
+('nm0000008', 'Marlon Brando')
+('nm0000009', 'Richard Burton')
+('nm0000010', 'James Cagney')
+('nm0000018', 'Kirk Douglas')
+----------------------------------------

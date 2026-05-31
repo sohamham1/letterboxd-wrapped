@@ -1,0 +1,80 @@
+.flavor-profile {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.flavor-profile__content {
+    width: 100%;
+    max-width: 680px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--space-6);
+}
+
+.flavor-profile__title {
+    font-size: var(--text-6xl);
+    line-height: 1.1;
+    margin-bottom: var(--space-2);
+}
+
+.flavor-profile__subtitle {
+    font-size: clamp(1.05rem, 1.5vw, 1.25rem);
+    max-width: 560px;
+    color: #cfd8e3;
+}
+
+.flavor-profile__chart {
+    width: 100%;
+    min-height: 360px;
+    height: 400px;
+    margin: var(--space-8) 0;
+    position: relative;
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.07) 0%, transparent 72%);
+    border-radius: var(--radius-2xl);
+    border: var(--surface-border-soft);
+}
+
+.flavor-profile__chart-placeholder {
+    width: 100%;
+    height: 100%;
+}
+
+.flavor-profile__summary {
+    font-size: clamp(1rem, 1.45vw, 1.16rem);
+    font-family: var(--font-display);
+    line-height: 1.4;
+    color: var(--color-text-primary);
+    max-width: 620px;
+    padding: var(--space-6);
+    background: var(--surface-glass);
+    border-radius: var(--radius-2xl);
+    border: var(--surface-border-soft);
+    box-shadow: var(--surface-shadow);
+}
+
+/* Custom Recharts styles overrides if needed */
+.recharts-polar-grid-concentric-polygon {
+    stroke-opacity: 0.5;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    .flavor-profile__chart {
+        height: 300px;
+    }
+}
+
+.flavor-profile__axis-pill {
+    display: inline-block;
+    padding: 0.12rem 0.55rem;
+    border-radius: 999px;
+    border: 1px solid rgba(96, 165, 250, 0.55);
+    background: rgba(59, 130, 246, 0.14);
+    color: #dbeafe;
+    font-weight: 700;
+    box-shadow: 0 0 8px rgba(59, 130, 246, 0.24);
+}
