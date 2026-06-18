@@ -313,6 +313,7 @@ def _time_remaining_seconds(start_ts: float) -> float:
 
 # Memory-only cache for Vercel
 _memory_movie_cache = {}
+_memory_shortlink_cache = {}
 
 if not IS_VERCEL:
     CACHE_DIR = Path("cache")
@@ -321,8 +322,10 @@ if not IS_VERCEL:
     except:
         pass
     MOVIE_CACHE_FILE = CACHE_DIR / "movies.json"
+    SHORTLINK_CACHE_FILE = CACHE_DIR / "shortlinks.json"
 else:
     MOVIE_CACHE_FILE = None
+    SHORTLINK_CACHE_FILE = None
 
 if not IS_VERCEL:
     METRICS_FILE = CACHE_DIR / "metrics.json"
@@ -703,6 +706,9 @@ async def bootstrap_db():
     else:
         logger.warning(f"DB unavailable at startup source={DB_SOURCE} path={DB_PATH}")
 
+_memory_movie_cache = {}
+_memory_shortlink_cache = {}
+
 def get_movie_cache():
     if IS_VERCEL: return _memory_movie_cache
     if MOVIE_CACHE_FILE and MOVIE_CACHE_FILE.exists():
@@ -720,6 +726,25 @@ def save_movie_cache(cache):
         return
     if MOVIE_CACHE_FILE:
         with open(MOVIE_CACHE_FILE, 'w') as f:
+            json.dump(cache, f)
+
+def get_shortlink_cache():
+    if IS_VERCEL: return _memory_shortlink_cache
+    if SHORTLINK_CACHE_FILE and SHORTLINK_CACHE_FILE.exists():
+        try:
+            with open(SHORTLINK_CACHE_FILE, 'r') as f:
+                return json.load(f)
+        except:
+            return {}
+    return {}
+
+def save_shortlink_cache(cache):
+    global _memory_shortlink_cache
+    if IS_VERCEL:
+        _memory_shortlink_cache = cache
+        return
+    if SHORTLINK_CACHE_FILE:
+        with open(SHORTLINK_CACHE_FILE, 'w') as f:
             json.dump(cache, f)
 
 def get_db_connection():
@@ -1513,7 +1538,11 @@ async def calculate_stats(
                             json_match = re.search(r'<script type="application/ld\+json">(.*?)</script>', text, re.DOTALL)
                             if json_match:
                                 try: 
-                                    ld = json.loads(json_match.group(1))
+                                    ld_text = json_match.group(1)
+                                    # Remove CDATA wrappers if present
+                                    ld_text = ld_text.replace('/* <![CDATA[ */', '').replace('/* ]]> */', '')
+                                    ld_text = ld_text.replace('<![CDATA[', '').replace(']]>', '').strip()
+                                    ld = json.loads(ld_text)
                                     if isinstance(ld, list): ld = ld[0]
                                     poster = ld.get('image')
                                     if poster and _is_placeholder_poster(poster):
@@ -2432,6 +2461,47 @@ async def get_wrapped_data(username: str):
     except Exception as e:
         import traceback; print(traceback.format_exc())
         raise HTTPException(status_code=500, detail=str(e))
+async def _resolve_boxd_urls_concurrently(entries_dicts):
+    shortlinks = list({e['uri'] for e in entries_dicts if e.get('uri') and 'boxd.it' in e['uri']})
+    if not shortlinks:
+        return
+        
+    resolved = {}
+    shortlink_cache = get_shortlink_cache()
+    
+    to_fetch = []
+    for url in shortlinks:
+        if url in shortlink_cache:
+            resolved[url] = shortlink_cache[url]
+        else:
+            to_fetch.append(url)
+            
+    if to_fetch:
+        async with AsyncSession(impersonate="chrome") as session:
+            session.headers.update(HEADERS)
+            sem = asyncio.Semaphore(20)
+            async def fetch(url):
+                async with sem:
+                    try:
+                        r = await session.head(url, timeout=5.0, allow_redirects=False)
+                        if r.status_code in (301, 302, 307) and 'Location' in r.headers:
+                            loc = r.headers['Location']
+                            if '/film/' in loc:
+                                parts = loc.split('/film/')
+                                if len(parts) > 1:
+                                    slug = parts[1].split('/')[0].strip('/')
+                                    if slug:
+                                        resolved[url] = slug
+                                        shortlink_cache[url] = slug
+                    except Exception as e:
+                        pass
+            
+            await asyncio.gather(*(fetch(url) for url in to_fetch))
+            save_shortlink_cache(shortlink_cache)
+
+    for e in entries_dicts:
+        if e.get('uri') in resolved:
+            e['slug'] = resolved[e.get('uri')]
 
 @app.post("/api/user/{username}/process")
 async def process_uploaded_data(username: str, data: ScrapedData, request: Request):
@@ -2511,6 +2581,10 @@ async def process_uploaded_data(username: str, data: ScrapedData, request: Reque
 
         default_year = 2025 if 2025 in available_years else available_years[-1]
         default_entries = _filter_entries_by_year(entries_dicts, default_year)
+        
+        # Resolve shortlinks before stats calculation to fix cache misses
+        await _resolve_boxd_urls_concurrently(default_entries)
+        
         wrapped = await calculate_stats(username, data.real_name, default_entries, default_year, request_id=request_id)
 
         session_id = str(uuid.uuid4())
@@ -2574,6 +2648,9 @@ async def process_uploaded_data_for_year(username: str, data: YearRequest, reque
     year_entries = _filter_entries_by_year(session_payload.get("entries", []), requested_year)
     if not year_entries:
         _raise_api_error(404, "NO_YEAR_DATA", f"No logs found for {requested_year}.")
+        
+    await _resolve_boxd_urls_concurrently(year_entries)
+        
     wrapped = await calculate_stats(
         username,
         session_payload.get("real_name", ""),
